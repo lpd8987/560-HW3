@@ -28,6 +28,9 @@ namespace BehaviorTree
         // This will be useful when determining whether a door must be open in order for a Character to move between two Locations connected by the door.
         public Dictionary<Location, Tuple<Thing, Location>> BetweenLocations { get; set; } = new Dictionary<Location, Tuple<Thing, Location>>();
 
+        //This dictionary stores what items characters hold.
+        public Dictionary<Character, HashSet<Thing>> Inventories { get; set; } = new Dictionary<Character, HashSet<Thing>>();
+
         // Formats and returns a string that represents the current world state.
         public override string ToString()
         {

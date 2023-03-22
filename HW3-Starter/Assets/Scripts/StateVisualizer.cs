@@ -79,6 +79,8 @@ public class StateVisualizer : MonoBehaviour
         state.BetweenLocations[Location.Entrance] = new Tuple<Thing, Location>(Thing.Gate, Location.Hallway);
         state.BetweenLocations[Location.Hallway] = new Tuple<Thing, Location>(Thing.Gate, Location.Entrance);
 
+        state.Inventories.Add(Character.Knight, new HashSet<Thing>());
+
         Debug.Log(state);
 
 
@@ -128,12 +130,14 @@ public class StateVisualizer : MonoBehaviour
         {
             // Grab the location of the current Thing.
             Location location = state.ThingPosition[thing];
+            if (!state.Inventories[Character.Knight].Contains(thing))
+            {
+                // Instantiate a game object at a random tile in the room from the WorldState using the Thing's prefab.
+                GameObject thingGameObject = Draw(thingPrefabs[thing], locationGameObjects[location]);
 
-            // Instantiate a game object at a random tile in the room from the WorldState using the Thing's prefab.
-            GameObject thingGameObject = Draw(thingPrefabs[thing], locationGameObjects[location]);
-
-            // Add the instantiated game object to the dictionary of Thing enum -> game objects.
-            thingGameObjects.Add(thing, thingGameObject);
+                // Add the instantiated game object to the dictionary of Thing enum -> game objects.
+                thingGameObjects.Add(thing, thingGameObject);
+            }
         }
 
         // Loop through each Character in the dictionary of Character enum -> prefabs...

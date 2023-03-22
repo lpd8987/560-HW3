@@ -299,7 +299,79 @@ public class BehaviorTreeEditor : EditorWindow
                 menu.ShowAsContext();
             }
         }
-        
+        else if (TypeToString(idToNode[windowID].GetType()) == "IsHere")
+        {
+            IsHere isHereCheck = idToNode[windowID] as IsHere;
+
+            if (GUI.Button(new Rect(5, 20, 190, 20), "Character: " + isHereCheck.TargetChar.ToString()))
+            {
+                GenericMenu menu = new GenericMenu();
+                foreach (Character character in Enum.GetValues(typeof(Character)))
+                {
+                    string characterString = character.ToString();
+                    menu.AddItem(new GUIContent(characterString), false, () =>
+                    {
+                        Debug.Log("TargetChar set to: " + characterString);
+                        isHereCheck.TargetChar = character;
+                        idToNode[windowID] = isHereCheck;
+                    });
+                }
+                menu.ShowAsContext();
+            }
+
+            if (GUI.Button(new Rect(5, 45, 190, 20), "Thing: " + isHereCheck.Collectible.ToString()))
+            {
+                GenericMenu menu = new GenericMenu();
+                foreach (Thing thing in Enum.GetValues(typeof(Thing)))
+                {
+                    string thingString = thing.ToString();
+                    menu.AddItem(new GUIContent(thingString), false, () =>
+                    {
+                        Debug.Log("Thing set to: " + thingString);
+                        isHereCheck.Collectible = thing;
+                        idToNode[windowID] = isHereCheck;
+                    });
+                }
+                menu.ShowAsContext();
+            }
+        }
+        else if (TypeToString(idToNode[windowID].GetType()) == "PickUp")
+        {
+            PickUp pickupAction = idToNode[windowID] as PickUp;
+
+            if (GUI.Button(new Rect(5, 20, 190, 20), "Character: " + pickupAction.TargetChar.ToString()))
+            {
+                GenericMenu menu = new GenericMenu();
+                foreach (Character character in Enum.GetValues(typeof(Character)))
+                {
+                    string characterString = character.ToString();
+                    menu.AddItem(new GUIContent(characterString), false, () =>
+                    {
+                        Debug.Log("TargetChar set to: " + characterString);
+                        pickupAction.TargetChar = character;
+                        idToNode[windowID] = pickupAction;
+                    });
+                }
+                menu.ShowAsContext();
+            }
+
+            if (GUI.Button(new Rect(5, 45, 190, 20), "Thing: " + pickupAction.Collectible.ToString()))
+            {
+                GenericMenu menu = new GenericMenu();
+                foreach (Thing thing in Enum.GetValues(typeof(Thing)))
+                {
+                    string thingString = thing.ToString();
+                    menu.AddItem(new GUIContent(thingString), false, () =>
+                    {
+                        Debug.Log("Thing set to: " + thingString);
+                        pickupAction.Collectible = thing;
+                        idToNode[windowID] = pickupAction;
+                    });
+                }
+                menu.ShowAsContext();
+            }
+        }
+
         GUI.DragWindow();
     }
 
